@@ -24,7 +24,7 @@
 AC_PREREQ([2.60])
 AC_INIT([xf86-input-evdev],
         [2.10.6],
-        [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
+        [https://gitlab.freedesktop.org/xorg/driver/xf86-input-evdev/issues],
         [xf86-input-evdev])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
