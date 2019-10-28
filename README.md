@@ -1,6 +1,14 @@
 This is modified from Ljosa's work: instead of emitting the MENU keycode
 when Space is held, emit LVL3.
 
+To install:
+- Follow build instructions at
+  http://www.ljosa.com/~ljosa/software/spacefn-xorg/
+- Copy 10-evdev.conf to /etc/X11/xorg.conf.d/ to make sure the `evdev` driver
+  instead of `libinput` by Xorg.
+
+------------------------------------------------------------------------
+
 This fork provides an implementation of SpaceFn in xf86-input-evdev.
 
     "The SpaceFN layout: trying to end keyboard inflation"
