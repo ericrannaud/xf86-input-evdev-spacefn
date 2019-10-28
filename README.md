@@ -1,3 +1,6 @@
+This is modified from Ljosa's work: instead of emitting the MENU keycode
+when Space is held, emit LVL3.
+
 This fork provides an implementation of SpaceFn in xf86-input-evdev.
 
     "The SpaceFN layout: trying to end keyboard inflation"

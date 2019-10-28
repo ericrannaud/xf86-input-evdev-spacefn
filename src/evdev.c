@@ -923,7 +923,7 @@ EvdevPostProximityEvents(InputInfoPtr pInfo, int which)
 
 #define BUF_SIZE 10
 #define KEY_CODE_SPACE 0x41
-#define KEY_CODE_MODIFIER 0x87 /* Menu */
+#define KEY_CODE_MODIFIER 92 /* LVL3 */
 
 static void emit_press(InputInfoPtr pInfo, int key_code)
 {
