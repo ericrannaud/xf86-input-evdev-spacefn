@@ -1,3 +1,15 @@
+This fork provides an implementation of SpaceFn in xf86-input-evdev.
+
+    "The SpaceFN layout: trying to end keyboard inflation"
+    https://geekhack.org/index.php?topic=51069.0
+
+The idea of SpaceFn is to let the space key work as both a regular
+space and a modifier. For more information about the implementation
+and how to build, install, and configure it, see
+http://www.ljosa.com/~ljosa/software/spacefn-xorg/.
+
+------------------------------------------------------------------------
+
 xf86-input-evdev - Generic Linux input driver for the Xorg X server
 -------------------------------------------------------------------
 
