@@ -925,6 +925,7 @@ EvdevPostProximityEvents(InputInfoPtr pInfo, int which)
 #define KEY_CODE_SPACE 0x41
 #define KEY_CODE_MODIFIER 92 /* LVL3 */
 #define HOLD_MS 150
+#define LONG_HOLD_MS 250
 
 static void emit_press(InputInfoPtr pInfo, int key_code)
 {
@@ -996,6 +997,7 @@ static void handle_key(InputInfoPtr pInfo, int key_code, int pressed)
 {
      static int modified = 0;
      int i;
+     int long_hold;
 
      if (pressed) {
           if (key_code == KEY_CODE_SPACE) {
@@ -1040,20 +1042,32 @@ static void handle_key(InputInfoPtr pInfo, int key_code, int pressed)
           }
      } else {
           if (key_code == KEY_CODE_SPACE) {
+               /* Has space been held down for a long time? */
+               long_hold = GetTimeInMillis() - modified >= LONG_HOLD_MS;
+
                modified = 0;
                if (!EvdevSpaceFnUsed) {
-                    /* If no modified letters were emitted while space
-                     * was held, then a space should be emitted. If
-                     * the buffer is non-empty, then the keys in the
-                     * buffer were pressed before but not
-                     * released. That means that we are rolling over
-                     * from space to those keys, so we should emit a
-                     * space (even if modified letters were previously
-                     * emitted) and then emit presses for the
-                     * unmodified keys in the buffer. */
-                    ensure_modifier_not_pressed(pInfo);
-                    emit_press(pInfo, KEY_CODE_SPACE);
-                    emit_release(pInfo, KEY_CODE_SPACE);
+                    if (long_hold && EvdevSpaceFnBufferFill == 0) {
+                        /* No modified letters were emitted while space was
+                         * held, and space was held for a long time, and the
+                         * buffer is empty (no ongoing rollover): do not emit
+                         * space at all.
+                         */
+                        ensure_modifier_not_pressed(pInfo);
+                    } else {
+                        /* If no modified letters were emitted while space
+                         * was held, then a space should be emitted. If
+                         * the buffer is non-empty, then the keys in the
+                         * buffer were pressed before but not
+                         * released. That means that we are rolling over
+                         * from space to those keys, so we should emit a
+                         * space (even if modified letters were previously
+                         * emitted) and then emit presses for the
+                         * unmodified keys in the buffer. */
+                        ensure_modifier_not_pressed(pInfo);
+                        emit_press(pInfo, KEY_CODE_SPACE);
+                        emit_release(pInfo, KEY_CODE_SPACE);
+                    }
                }
                if (EvdevSpaceFnBufferFill > 0) {
                     ensure_modifier_not_pressed(pInfo);
