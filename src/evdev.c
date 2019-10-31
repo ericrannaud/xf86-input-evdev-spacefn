@@ -924,6 +924,7 @@ EvdevPostProximityEvents(InputInfoPtr pInfo, int which)
 #define BUF_SIZE 10
 #define KEY_CODE_SPACE 0x41
 #define KEY_CODE_MODIFIER 92 /* LVL3 */
+#define HOLD_MS 150
 
 static void emit_press(InputInfoPtr pInfo, int key_code)
 {
@@ -1007,7 +1008,7 @@ static void handle_key(InputInfoPtr pInfo, int key_code, int pressed)
                }
           } else {
                if (modified) {
-                    if (GetTimeInMillis() - modified >= 150) {
+                    if (GetTimeInMillis() - modified >= HOLD_MS) {
                          /* Letter key pressed after space has been held
                           * for a while. Assume that space is being used as
                           * a modifier, so ensure that the modifier key has
